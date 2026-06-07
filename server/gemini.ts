@@ -1,10 +1,15 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { EmptyResponseError, MissingApiKeyError } from './errors.js';
-import { SYSTEM_PROMPT } from './prompts/systemPrompt.js';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { EmptyResponseError, MissingApiKeyError } from "./errors.js";
+import { SYSTEM_PROMPT } from "./prompts/systemPrompt";
 
-const MODEL = 'gemini-2.0-flash';
+const MODEL = "gemini-2.5-flash";
 
 export async function askGemini(question: string): Promise<string> {
+  // Mock mode – return a deterministic fake answer
+  if (process.env.MOCK_API === "true") {
+    return `🤖 Мок‑ответ на: ${question}`;
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new MissingApiKeyError();

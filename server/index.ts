@@ -1,8 +1,8 @@
-import 'dotenv/config';
-import cors from 'cors';
-import express from 'express';
-import { mapErrorToHttp } from './errors.js';
-import { askGemini } from './gemini.js';
+import "dotenv/config";
+import cors from "cors";
+import express from "express";
+import { mapErrorToHttp } from "./errors.js";
+import { askGemini } from "./gemini";
 
 const app = express();
 const PORT = 3001;
@@ -10,15 +10,16 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' });
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok" });
 });
 
-app.post('/api/ask', async (req, res) => {
-  const question = typeof req.body?.question === 'string' ? req.body.question.trim() : '';
+app.post("/api/ask", async (req, res) => {
+  const question =
+    typeof req.body?.question === "string" ? req.body.question.trim() : "";
 
   if (!question) {
-    return res.status(400).json({ error: 'Введите вопрос' });
+    return res.status(400).json({ error: "Введите вопрос" });
   }
 
   try {
